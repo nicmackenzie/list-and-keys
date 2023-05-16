@@ -1,5 +1,10 @@
+import { useState } from 'react';
 import ExpenseItem from './ExpenseItem';
 import Form from './Form';
+
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
 
 const EXPENSES = [
   {
@@ -29,15 +34,16 @@ const EXPENSES = [
 ];
 
 function App() {
+  const [expenses, setExpenses] = useState(EXPENSES);
   return (
     <div className="app">
-      <Form />
+      <Form setExpenses={setExpenses} />
       <div className="expenses">
-        {EXPENSES.map(expense => (
+        {expenses.map(expense => (
           <ExpenseItem
             key={expense.id}
             expenseDate={expense.expenseDate}
-            expenseType={expense.expenseType}
+            expenseType={capitalizeFirstLetter(expense.expenseType)}
             amount={expense.amount}
           />
         ))}
